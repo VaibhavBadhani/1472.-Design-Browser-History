@@ -1,0 +1,40 @@
+class BrowserHistory {
+    ArrayList<String> history;
+    int currIndex = 0;
+    int lastValidIndex = 0;
+    public BrowserHistory(String homepage) {
+        this.history = new ArrayList<>();
+        this.history.add(homepage);    
+
+    }
+    
+    public void visit(String url) {
+        if(this.currIndex == history.size()-1){
+            this.history.add(url);
+        }else{
+            this.history.set(this.currIndex+1, url);
+        }
+        this.currIndex++;
+        this.lastValidIndex = currIndex;
+    }
+    
+    public String back(int steps) {
+        int targetIndex = Math.max(0, this.currIndex - steps);
+        this.currIndex = targetIndex;
+        return this.history.get(targetIndex);
+    }
+    
+    public String forward(int steps) {
+        int targetIndex = Math.min(this.lastValidIndex, this.currIndex + steps);
+        this.currIndex = targetIndex;
+        return this.history.get(targetIndex);
+    }
+}
+
+/**
+ * Your BrowserHistory object will be instantiated and called as such:
+ * BrowserHistory obj = new BrowserHistory(homepage);
+ * obj.visit(url);
+ * String param_2 = obj.back(steps);
+ * String param_3 = obj.forward(steps);
+ */
